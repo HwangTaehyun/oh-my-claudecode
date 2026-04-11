@@ -58,6 +58,8 @@ If you prefer the npm CLI/runtime path instead of the marketplace flow:
 npm i -g oh-my-claude-sisyphus@latest
 ```
 
+> **Plugin vs CLI:** The plugin path loads skills/agents from the plugin cache automatically. The npm CLI path copies them into `~/.claude/skills/` and `~/.claude/agents/` as standalone files. If you use both, OMC deduplicates automatically. Each installed file is stamped with `source: omc` so that user-created and third-party skills are never touched during cleanup. See [How Skills & Agents Are Installed](#how-skills--agents-are-installed) for details.
+
 **Step 2: Setup**
 
 ```bash
@@ -68,6 +70,8 @@ npm i -g oh-my-claude-sisyphus@latest
 # From your terminal
 omc setup
 ```
+
+> **What does setup do?** It syncs CLAUDE.md, hooks, and (if needed) standalone skill/agent files. If you installed via **plugin** (Step 1 recommended path), skills and agents are already served from the plugin cache — `omc setup` detects this and skips copying standalone files. If you installed via **npm only**, setup copies them into `~/.claude/skills/` and `~/.claude/agents/`.
 
 If you run OMC via `omc --plugin-dir <path>` or `claude --plugin-dir <path>`, add `--plugin-dir-mode` to `omc setup` (or export `OMC_PLUGIN_ROOT` before running it) so the installer doesn't duplicate skills/agents that the plugin already provides at runtime. See the [Plugin directory flags section in REFERENCE.md](./docs/REFERENCE.md#plugin-directory-flags) for a complete decision matrix and all available flags.
 
@@ -277,6 +281,31 @@ Wrap handler at server.py:42 in try/except ClientDisconnectedError...
 **Auto-inject:** Matching skills load into context automatically — no manual recall needed
 
 [Full feature list →](docs/REFERENCE.md)
+
+### How Skills & Agents Are Installed
+
+OMC can deliver skills and agents through two paths. Understanding which is active prevents confusion when files appear (or disappear) from your config directory.
+
+| Path | Installed by | Location | Loaded by |
+|------|-------------|----------|-----------|
+| **Plugin** | `/plugin install oh-my-claudecode` | `~/.claude/plugins/cache/omc/oh-my-claudecode/<version>/` | Claude Code plugin system (automatic) |
+| **Standalone** | `omc setup` (CLI) | `~/.claude/skills/`, `~/.claude/agents/` | Claude Code directly |
+
+If both paths are active, the same skill appears twice. OMC automatically removes standalone copies when a plugin is present (`prunePluginDuplicate*` functions).
+
+**Ownership marker — `source: omc`**
+
+When OMC installs skills or agents, it stamps the YAML frontmatter with `source: omc`:
+
+```yaml
+---
+source: omc        # ← OMC-installed marker
+name: autopilot
+description: Full autonomous execution
+---
+```
+
+Only files with this marker are eligible for cleanup or pruning. **User-created and third-party skills are never deleted**, even if they use the same frontmatter format.
 
 ---
 
