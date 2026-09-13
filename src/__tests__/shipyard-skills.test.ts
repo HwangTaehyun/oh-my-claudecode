@@ -437,8 +437,9 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(LAUNCH).toContain('scratch/throwaway');
     expect(LAUNCH).toContain('never silently swallow a high-confidence actionable finding');
     expect(LAUNCH).toContain('No general bypass');
-    expect(LAUNCH).toContain('Current audit limitation');
-    expect(LAUNCH).toContain('without a machine-readable finding/severity contract or executable');
+    expect(LAUNCH).toContain('Current audit contract');
+    expect(LAUNCH).toContain('node scripts/shipyard-audit.mjs');
+    expect(LAUNCH).toContain('exit 0 = clean, 1 = high-confidence actionable findings present');
     expect(LAUNCH).toContain('The rules entry is `CLAUDE.md` — the shipyard map recognizes no substitute');
     expect(LAUNCH).not.toContain('No override flag, no confirm-to-continue path');
     expect(LAUNCH).not.toContain('no exception for throwaway prototypes — laying the yard is one command away');
