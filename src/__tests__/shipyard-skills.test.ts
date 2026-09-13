@@ -157,6 +157,25 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(NAVIGATOR).toContain('Call the Skill tool with "loft"');
   });
 
+  it('launch carries the round-2 disciplines (comprehension reset, settled-consensus exit, planned handoff)', () => {
+    expect(LAUNCH).toContain('**Comprehension reset.**');
+    expect(LAUNCH).toContain('the terms as `CONTEXT.md` defines them');
+    expect(LAUNCH).toContain('**Settled-consensus exit.**');
+    expect(LAUNCH).toContain('consensus audit');
+    expect(LAUNCH).toContain('skipping the interview never skips a signature');
+    expect(LAUNCH).toContain('**Planned session handoff**');
+    expect(LAUNCH).toContain('No raw transcript, no chat history');
+  });
+
+  it('harbor and navigator carry the round-3 disciplines (external extraction, ask-a-person, environment face, repair)', () => {
+    expect(HARBOR).toContain('**External knowledge extraction.**');
+    expect(HARBOR).toContain('the subject is never grilled');
+    expect(NAVIGATOR).toContain('knowledge lives in a **person**');
+    expect(NAVIGATOR).toContain('cited as the primary source');
+    expect(LAUNCH).toContain('where the **environment dragged**');
+    expect(LAUNCH).toContain('one misunderstanding at a time');
+  });
+
   it('agent-doc-discipline ships as advisory and is wired at its two mandatory call sites', () => {
     // The document-side companion of minimal-code-discipline: advisory skill,
     // never a gate; mandatory exactly at drydock seeds and launch C5 sediment.
