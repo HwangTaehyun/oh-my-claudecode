@@ -176,6 +176,15 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(LAUNCH).toContain('one misunderstanding at a time');
   });
 
+  it('agent-doc-discipline carries the output disciplines (closable next action, rejoin orientation)', () => {
+    const DISCIPLINE = readFileSync(join(ROOT, 'skills', 'agent-doc-discipline', 'SKILL.md'), 'utf-8');
+    expect(DISCIPLINE).toContain('**Close on a next action a reader can start now.**');
+    expect(DISCIPLINE).toContain('under two minutes');
+    expect(DISCIPLINE).toContain('**Re-state the position each time the reader rejoins.**');
+    expect(DISCIPLINE).toContain('where things stand');
+    expect(DISCIPLINE).not.toContain('always-on');
+  });
+
   it('agent-doc-discipline ships as advisory and is wired at its two mandatory call sites', () => {
     // The document-side companion of minimal-code-discipline: advisory skill,
     // never a gate; mandatory exactly at drydock seeds and launch C5 sediment.
