@@ -28,6 +28,10 @@ Documents written for humans only: `docs/business/` narrative, ADR decision stor
 
 **Every step ends on a completion criterion.** Done must be tellable from not-done — a vague bound invites premature completion. _Test:_ for each step, "how do I know this is finished?" has an answer in the text.
 
+**Close on a next action a reader can start now.** A report, ticket, or session-close pointer ends not with a summary but with the one next step a reader can begin in under two minutes — the destination, the pointer, or the command. A close that only summarizes makes the reader re-derive what to do first. _Test:_ the last line answers "what do I do next?" without scrolling up.
+
+**Re-state the position each time the reader rejoins.** A document a returning reader touches mid-flight (a long spec, a run report, a map Notes section) opens the new material with where things stand — step, phase, or decision count — before adding anything new. _Test:_ a reader arriving cold can locate the current state in the first two lines of the newest section.
+
 **Prompt the positive.** State the target behavior; a prohibition is reserved for hard guardrails and is always paired with the positive target. _Test:_ every prohibition in the document names the thing to do instead.
 
 **Scrape barnacles on write.** When the document contains stale or redundant material, remove it in the same edit; when it does not, add only the required material and do not invent deletions. A sentence the model already obeys by default pays load for nothing — delete the whole sentence. _Test:_ every line re-read earns its place against "does this change behavior versus the default?", and any stale or redundant material found during the edit is gone.
@@ -40,3 +44,4 @@ Before reporting a document change done, confirm:
 - every rule is checkable and states its why; no rule restates a lookup
 - meanings live in one place; pointers name their trigger branches
 - stale or redundant material found during the edit was removed, while valid unrelated content was preserved
+- closes end on a next action the reader can start now; rejoining readers find the current state stated before new material
