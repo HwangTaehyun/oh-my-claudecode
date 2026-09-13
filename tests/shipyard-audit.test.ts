@@ -115,9 +115,36 @@ describe('shipyard-audit script (the --check structured finding contract)', () =
     );
     const { status, report } = runAudit(yard);
     expect(status).toBe(1);
-    const dead = report!.findings.filter((f) => f.id === 'shipyard.claude-md.dead-path');
+    const dead = report!.findings.filter((f) => f.id.startsWith('shipyard.claude-md.dead-path'));
     expect(dead.length).toBe(1);
     expect(dead[0].evidence).toEqual(['docs/standards/does-not-exist.md']);
+  });
+
+  it('gives each dead path its own finding id and reports a repeated path once', () => {
+    seedCleanYard(yard);
+    writeFileSync(
+      join(yard, 'CLAUDE.md'),
+      '# Project\n\n- Ghost: docs/standards/ghost-a.md\n- Ghost again: docs/standards/ghost-a.md\n- Other ghost: docs/standards/ghost-b.md\n',
+    );
+    const { report } = runAudit(yard);
+    const dead = report!.findings.filter((f) => f.id.startsWith('shipyard.claude-md.dead-path'));
+    expect(dead.map((f) => f.evidence[0]).sort()).toEqual([
+      'docs/standards/ghost-a.md',
+      'docs/standards/ghost-b.md',
+    ]);
+    // ids must be unique, or a consumer keying findings by id silently loses one
+    expect(new Set(dead.map((f) => f.id)).size).toBe(dead.length);
+  });
+
+  it('ignores paths inside fenced code blocks', () => {
+    seedCleanYard(yard);
+    writeFileSync(
+      join(yard, 'CLAUDE.md'),
+      '# Project\n\nRun the seed:\n\n```bash\nmkdir -p docs/standards/<area>\ncat scripts/never-exists.mjs\n```\n\n~~~\ndesign-system/tokens/<name>.json\n~~~\n\n- Architecture: docs/standards/architecture.md\n',
+    );
+    const { status, report } = runAudit(yard);
+    expect(report!.findings.filter((f) => f.id.startsWith('shipyard.claude-md.dead-path'))).toEqual([]);
+    expect(status).toBe(0);
   });
 
   it('never emits heuristic-class findings (terms unused, standards unreferenced)', () => {

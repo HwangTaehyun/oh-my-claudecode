@@ -104,18 +104,43 @@ function checkDocumentLanguage(root) {
   return [];
 }
 
+// Fenced blocks hold commands, samples, and templated placeholders. A path
+// there is illustrative, not a claim about this repo's layout, so scanning it
+// manufactures actionable findings the yard cannot act on.
+function stripFencedBlocks(content) {
+  const lines = content.split(/\r?\n/);
+  const kept = [];
+  let fence = null;
+  for (const line of lines) {
+    const open = /^\s*(`{3,}|~{3,})/.exec(line);
+    if (fence) {
+      if (open && open[1][0] === fence[0] && open[1].length >= fence.length) fence = null;
+      continue;
+    }
+    if (open) {
+      fence = open[1];
+      continue;
+    }
+    kept.push(line);
+  }
+  return kept.join('\n');
+}
+
 function checkClaudeMdDeadPaths(root) {
   const claudePath = join(root, 'CLAUDE.md');
   if (!existsSync(claudePath)) return [];
-  const content = readFileSync(claudePath, 'utf-8');
+  const content = stripFencedBlocks(readFileSync(claudePath, 'utf-8'));
   const findings = [];
+  const seen = new Set();
   const pathPattern = /\b((?:docs|design-system|scripts|\.omc)\/[\w./-]+)/g;
   for (const m of content.matchAll(pathPattern)) {
     const p = m[1];
+    if (seen.has(p)) continue;
+    seen.add(p);
     if (existsSync(join(root, p))) continue;
     findings.push(
       finding(
-        'shipyard.claude-md.dead-path',
+        `shipyard.claude-md.dead-path.${p.replace(/[^a-z0-9]+/gi, '-')}`,
         `CLAUDE.md points at a dead path: ${p}`,
         SEVERITY.high,
         'high',
