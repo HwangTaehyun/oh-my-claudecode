@@ -452,12 +452,17 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(DRYDOCK).toContain('throwaway/scratch');
     expect(DRYDOCK).toContain('high-confidence actionable findings as blocking');
     expect(DRYDOCK).toContain('low-confidence or explicitly-classified false-positive');
-    expect(DRYDOCK).toContain('no executable or machine-readable exit contract');
-    expect(DRYDOCK).toContain('planned follow-up');
+
+    // the structured exit contract exists — the limitation wording is retired
+    expect(DRYDOCK).toContain('The structured exit contract');
+    expect(DRYDOCK).toContain('node scripts/shipyard-audit.mjs');
+    expect(DRYDOCK).toContain('Exit code 0 = clean, 1 = high-confidence actionable findings present, 2 = invocation error');
+    expect(DRYDOCK).not.toContain('planned follow-up');
 
     // docs/shipyard.md must reflect the same softened contract
     expect(SHIPYARD_DOC).toContain('per-finding confidence');
-    expect(SHIPYARD_DOC).toContain('no executable or machine-readable severity contract (planned follow-up)');
+    expect(SHIPYARD_DOC).toContain('node scripts/shipyard-audit.mjs');
+    expect(SHIPYARD_DOC).toContain('the structured contract both surfaces share');
     expect(SHIPYARD_DOC).toContain('blocks on high-confidence actionable drydock findings');
     expect(SHIPYARD_DOC).toContain('narrowly, explicitly overridden low-confidence / false-positive / scratch-scope finding — no general bypass');
   });
