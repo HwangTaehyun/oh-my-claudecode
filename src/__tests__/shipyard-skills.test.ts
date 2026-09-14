@@ -157,6 +157,34 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(NAVIGATOR).toContain('Call the Skill tool with "loft"');
   });
 
+  it('launch carries the round-2 disciplines (comprehension reset, settled-consensus exit, planned handoff)', () => {
+    expect(LAUNCH).toContain('**Comprehension reset.**');
+    expect(LAUNCH).toContain('the terms as `CONTEXT.md` defines them');
+    expect(LAUNCH).toContain('**Settled-consensus exit.**');
+    expect(LAUNCH).toContain('consensus audit');
+    expect(LAUNCH).toContain('skipping the interview never skips a signature');
+    expect(LAUNCH).toContain('**Planned session handoff**');
+    expect(LAUNCH).toContain('No raw transcript, no chat history');
+  });
+
+  it('harbor and navigator carry the round-3 disciplines (external extraction, ask-a-person, environment face, repair)', () => {
+    expect(HARBOR).toContain('**External knowledge extraction.**');
+    expect(HARBOR).toContain('the subject is never grilled');
+    expect(NAVIGATOR).toContain('knowledge lives in a **person**');
+    expect(NAVIGATOR).toContain('cited as the primary source');
+    expect(LAUNCH).toContain('where the **environment dragged**');
+    expect(LAUNCH).toContain('one misunderstanding at a time');
+  });
+
+  it('agent-doc-discipline carries the output disciplines (closable next action, rejoin orientation)', () => {
+    const DISCIPLINE = readFileSync(join(ROOT, 'skills', 'agent-doc-discipline', 'SKILL.md'), 'utf-8');
+    expect(DISCIPLINE).toContain('**Close on a next action a reader can start now.**');
+    expect(DISCIPLINE).toContain('under two minutes');
+    expect(DISCIPLINE).toContain('**Re-state the position each time the reader rejoins.**');
+    expect(DISCIPLINE).toContain('where things stand');
+    expect(DISCIPLINE).not.toContain('always-on');
+  });
+
   it('agent-doc-discipline ships as advisory and is wired at its two mandatory call sites', () => {
     // The document-side companion of minimal-code-discipline: advisory skill,
     // never a gate; mandatory exactly at drydock seeds and launch C5 sediment.
@@ -437,8 +465,9 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(LAUNCH).toContain('scratch/throwaway');
     expect(LAUNCH).toContain('never silently swallow a high-confidence actionable finding');
     expect(LAUNCH).toContain('No general bypass');
-    expect(LAUNCH).toContain('Current audit limitation');
-    expect(LAUNCH).toContain('without a machine-readable finding/severity contract or executable');
+    expect(LAUNCH).toContain('Current audit contract');
+    expect(LAUNCH).toContain('node scripts/shipyard-audit.mjs');
+    expect(LAUNCH).toContain('exit 0 = clean, 1 = high-confidence actionable findings present');
     expect(LAUNCH).toContain('The rules entry is `CLAUDE.md` — the shipyard map recognizes no substitute');
     expect(LAUNCH).not.toContain('No override flag, no confirm-to-continue path');
     expect(LAUNCH).not.toContain('no exception for throwaway prototypes — laying the yard is one command away');
@@ -452,12 +481,17 @@ describe('shipyard skills — behavior & packaging contract', () => {
     expect(DRYDOCK).toContain('throwaway/scratch');
     expect(DRYDOCK).toContain('high-confidence actionable findings as blocking');
     expect(DRYDOCK).toContain('low-confidence or explicitly-classified false-positive');
-    expect(DRYDOCK).toContain('no executable or machine-readable exit contract');
-    expect(DRYDOCK).toContain('planned follow-up');
+
+    // the structured exit contract exists — the limitation wording is retired
+    expect(DRYDOCK).toContain('The structured exit contract');
+    expect(DRYDOCK).toContain('node scripts/shipyard-audit.mjs');
+    expect(DRYDOCK).toContain('Exit code 0 = clean, 1 = high-confidence actionable findings present, 2 = invocation error');
+    expect(DRYDOCK).not.toContain('planned follow-up');
 
     // docs/shipyard.md must reflect the same softened contract
     expect(SHIPYARD_DOC).toContain('per-finding confidence');
-    expect(SHIPYARD_DOC).toContain('no executable or machine-readable severity contract (planned follow-up)');
+    expect(SHIPYARD_DOC).toContain('node scripts/shipyard-audit.mjs');
+    expect(SHIPYARD_DOC).toContain('the structured contract both surfaces share');
     expect(SHIPYARD_DOC).toContain('blocks on high-confidence actionable drydock findings');
     expect(SHIPYARD_DOC).toContain('narrowly, explicitly overridden low-confidence / false-positive / scratch-scope finding — no general bypass');
   });

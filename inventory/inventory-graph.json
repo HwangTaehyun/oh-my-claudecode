@@ -5,15 +5,15 @@
   "provenance": {
     "base": "05c800f40d1ad53b42a78609d2667ef4f726808b",
     "planningHead": "0a91273e61dbbd47eb0af4c02844409251e08398",
-    "head": "629d16ff63cf5ae6b0e70725fcaea11e1b453c08",
-    "sourceSha256": "3eeb3eb74bc7a10a57a0d505dd530f24b1404a71fd866c03c101b2712eeefa16",
+    "head": "e29b9abd27995b1705a7f0595b61de8ca57e90db",
+    "sourceSha256": "67ce71f36df170b5de02d75e8b7798244bc9cabc264246530e420b607b63e082",
     "generatedAt": null,
     "generator": "scripts/generate-inventory-graph.mjs"
   },
   "base": "05c800f40d1ad53b42a78609d2667ef4f726808b",
   "planningHead": "0a91273e61dbbd47eb0af4c02844409251e08398",
-  "head": "629d16ff63cf5ae6b0e70725fcaea11e1b453c08",
-  "sourceSha256": "3eeb3eb74bc7a10a57a0d505dd530f24b1404a71fd866c03c101b2712eeefa16",
+  "head": "e29b9abd27995b1705a7f0595b61de8ca57e90db",
+  "sourceSha256": "67ce71f36df170b5de02d75e8b7798244bc9cabc264246530e420b607b63e082",
   "counts": {
     "public": {
       "skills": 41,
@@ -811,6 +811,7 @@
       "scripts/setup-init.mjs",
       "scripts/setup-maintenance.mjs",
       "scripts/setup-progress.sh",
+      "scripts/shipyard-audit.mjs",
       "scripts/skill-injector.mjs",
       "scripts/smoke-multirepo.mjs",
       "scripts/status.mjs",
@@ -33627,6 +33628,11 @@
         "path": "scripts/setup-progress.sh"
       },
       {
+        "id": "scripts/shipyard-audit.mjs",
+        "kind": "script",
+        "path": "scripts/shipyard-audit.mjs"
+      },
+      {
         "id": "scripts/skill-injector.mjs",
         "kind": "script",
         "path": "scripts/skill-injector.mjs"
@@ -41282,6 +41288,11 @@
         "path": "tests/perf/subagent-lock.bench.ts"
       },
       {
+        "id": "tests/shipyard-audit.test.ts",
+        "kind": "other",
+        "path": "tests/shipyard-audit.test.ts"
+      },
+      {
         "id": "tsconfig.json",
         "kind": "other",
         "path": "tsconfig.json"
@@ -43301,6 +43312,16 @@
       {
         "from": "scripts/setup-maintenance.mjs",
         "to": "scripts/lib/stdin.mjs",
+        "kind": "imports"
+      },
+      {
+        "from": "scripts/shipyard-audit.mjs",
+        "to": "external:node:fs",
+        "kind": "imports"
+      },
+      {
+        "from": "scripts/shipyard-audit.mjs",
+        "to": "external:node:path",
         "kind": "imports"
       },
       {
@@ -79039,6 +79060,36 @@
         "kind": "imports"
       },
       {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:node:child_process",
+        "kind": "imports"
+      },
+      {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:node:fs",
+        "kind": "imports"
+      },
+      {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:node:os",
+        "kind": "imports"
+      },
+      {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:node:path",
+        "kind": "imports"
+      },
+      {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:node:url",
+        "kind": "imports"
+      },
+      {
+        "from": "tests/shipyard-audit.test.ts",
+        "to": "external:vitest",
+        "kind": "imports"
+      },
+      {
         "from": "vitest.config.ts",
         "to": "external:node:url",
         "kind": "imports"
@@ -79050,12 +79101,12 @@
       }
     ],
     "stats": {
-      "nodeCount": 6982,
-      "edgeCount": 7547,
-      "importEdgeCount": 6224,
+      "nodeCount": 6984,
+      "edgeCount": 7555,
+      "importEdgeCount": 6232,
       "registerEdgeCount": 62
     }
   },
-  "inventorySha256": "0ced6d0cbeeecd6c8ba015b27d805adc855e93265139ef0e5f82d8108d43266a",
-  "manifestSha256": "f684ccb0f53068d8827c133b56b3fedf4101487f12022216508e259f4ed54e80"
+  "inventorySha256": "2273948adc18eb76ea2beda974ac12d9b72d7c1d2d8146c48b69e2ed2bb94b11",
+  "manifestSha256": "0f7e428ef285db7f9dca9661f076343f12711fae9ab35f8f068aa41cd5ed04d4"
 }
