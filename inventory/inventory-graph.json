@@ -5,15 +5,15 @@
   "provenance": {
     "base": "05c800f40d1ad53b42a78609d2667ef4f726808b",
     "planningHead": "0a91273e61dbbd47eb0af4c02844409251e08398",
-    "head": "144b36998f47d6460f63397bc73aec8e94f665a1",
-    "sourceSha256": "e459ae36261e5b99352f415c20354281b47018933d5f0b3210548476268d6b62",
+    "head": "8ad6a30b00f3547f9348c6fdb6b9843b8a6ffd5c",
+    "sourceSha256": "3a25cc9cf81790a090fb693cbd9efad6019adf7dd854b4838195047964a5b025",
     "generatedAt": null,
     "generator": "scripts/generate-inventory-graph.mjs"
   },
   "base": "05c800f40d1ad53b42a78609d2667ef4f726808b",
   "planningHead": "0a91273e61dbbd47eb0af4c02844409251e08398",
-  "head": "144b36998f47d6460f63397bc73aec8e94f665a1",
-  "sourceSha256": "e459ae36261e5b99352f415c20354281b47018933d5f0b3210548476268d6b62",
+  "head": "8ad6a30b00f3547f9348c6fdb6b9843b8a6ffd5c",
+  "sourceSha256": "3a25cc9cf81790a090fb693cbd9efad6019adf7dd854b4838195047964a5b025",
   "counts": {
     "public": {
       "skills": 43,
@@ -28,8 +28,8 @@
       "toolFiles": 61,
       "libFiles": 43,
       "templateHooks": 22,
-      "srcFiles": 1355,
-      "total": 1377
+      "srcFiles": 1356,
+      "total": 1378
     },
     "generated": {
       "distFiles": 5032,
@@ -34806,6 +34806,11 @@
         "path": "src/__tests__/hud/update-hint.test.ts"
       },
       {
+        "id": "src/__tests__/hud/usage-api-header-fallback.test.ts",
+        "kind": "src",
+        "path": "src/__tests__/hud/usage-api-header-fallback.test.ts"
+      },
+      {
         "id": "src/__tests__/hud/usage-api-lock.test.ts",
         "kind": "src",
         "path": "src/__tests__/hud/usage-api-lock.test.ts"
@@ -46261,6 +46266,16 @@
         "from": "src/__tests__/hud/update-hint.test.ts",
         "to": "src/hud/types.ts",
         "kind": "type-imports"
+      },
+      {
+        "from": "src/__tests__/hud/usage-api-header-fallback.test.ts",
+        "to": "external:vitest",
+        "kind": "imports"
+      },
+      {
+        "from": "src/__tests__/hud/usage-api-header-fallback.test.ts",
+        "to": "src/hud/usage-api.ts",
+        "kind": "imports"
       },
       {
         "from": "src/__tests__/hud/usage-api-lock.test.ts",
@@ -79209,12 +79224,12 @@
       }
     ],
     "stats": {
-      "nodeCount": 6995,
-      "edgeCount": 7565,
-      "importEdgeCount": 6240,
+      "nodeCount": 6996,
+      "edgeCount": 7567,
+      "importEdgeCount": 6242,
       "registerEdgeCount": 64
     }
   },
-  "inventorySha256": "1b4990a2b61dcb59fd88700e1a31a8e4bca4447439e9904503d63d0b2acd39c4",
-  "manifestSha256": "007679164c0a1dc2bd25ef1a8bd837d32b53fe289f6ee5423b4319c7478277d0"
+  "inventorySha256": "0ccbc114a24a8f961174e935d79c472cf1df3d1c5625ed7fdbfc26ed8a28085c",
+  "manifestSha256": "91df6082088e2e9283cea3f6f55515859ffaed6e2a24369d31b6da69772a1bf0"
 }
